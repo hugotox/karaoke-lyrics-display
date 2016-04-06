@@ -1,0 +1,38 @@
+* {
+    font-family: impact, sans-serif;
+    text-align: center;
+    transition: all 500ms;
+    text-transform: uppercase;
+}
+html, body, #container{
+    height:100%;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    background-color: #232323;
+    color: white;
+}
+
+.current-line {
+    font-size: 60px;
+    text-shadow: 1px 1px 1px #666;
+    height: 170px;
+}
+
+.next-line, .next-line-2 {
+    font-size: 30px;
+    color: #707070;
+    height: 75px;
+}
+
+.next-line-2 {
+    opacity: 0;
+}
+
+#lyrics {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+}
