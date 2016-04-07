@@ -1,14 +1,56 @@
+var options = {
+  currentLineFontSize: '60px',
+  currentLineHeight: '170px',
+  currentLineColor: '#ffffff',
+  nextLineFontSize: '30px',
+  nextLineHeight: '75px',
+  nextLineColor: '#707070',
+  images: {
+    'highway-to-hell': 'ac-dc.jpg'
+  }
+};
+
+var songParam = window.location.search.split('?song=')[1];
+var url = 'static/songs/' + songParam + '.txt';
+
+// option based style:
+var style = '<style>' +
+
+'#background {' +
+'  background: #232323 url("static/img/'+options.images[songParam]+'") no-repeat center;' +
+'  background-size: cover;' +
+'}' +
+
+'.current-line {' +
+'  font-size: '+options.currentLineFontSize+';' +
+'  text-shadow: 1px 1px 1px #666;' +
+'  color: '+options.currentLineColor+';' +
+'  height: '+options.currentLineHeight+';' +
+'}' +
+
+'.next-line, .next-line-2 {' +
+'  font-size: '+options.nextLineFontSize+';' +
+'  color: '+options.nextLineColor+';' +
+'  height: '+options.nextLineHeight+';' +
+'}' +
+
+'.next-line-2 {' +
+'  opacity: 0;' +
+'}' +
+'</style>';
+
+document.write(style);
 
 $(document).ready(function(){
 
   var song, lines;
   var i = 3;
-  var clickLocked = false;
+  var locked = false;
 
-  var addOnClick = function(){
-    $(window).click(function(){
-      if(!clickLocked) {
-        clickLocked = true;
+  var addHandlers = function(){
+    $(document).on('click keydown', function(){
+      if(!locked) {
+        locked = true;
         var $currentLine = $('.current-line');
         var $nextLine = $('.next-line');
         var $nextLine2 = $('.next-line-2');
@@ -16,9 +58,9 @@ $(document).ready(function(){
         $currentLine.css('opacity', 0);
         $currentLine.css('font-size', '0px');
         $currentLine.css('height', '0px');
-        $nextLine.css('color', '#ffffff');
-        $nextLine.css('font-size', '60px');
-        $nextLine.css('height', '170px');
+        $nextLine.css('color', options.currentLineColor);
+        $nextLine.css('font-size', options.currentLineFontSize);
+        $nextLine.css('height', options.currentLineHeight);
         $nextLine2.css('opacity', 1);
         setTimeout(function() {
           $currentLine.remove();
@@ -27,16 +69,14 @@ $(document).ready(function(){
           $lyrics.append('<div class="next-line-2"></div>');
           $('.next-line-2').html(song[i]);
           i++;
-          clickLocked = false;
+          locked = false;
         }, 500);
       }
     });
   };
 
   // load the song
-  $.ajax({
-    url: 'static/songs/highway-to-hell.txt'
-  })
+  $.ajax({ url: url })
     .done(function(data){
       song = data.split('\n');
       lines = song.length;
@@ -46,7 +86,7 @@ $(document).ready(function(){
       $currentLine.html(song[0]);
       $nextLine.html(song[1]);
       $nextLine2.html(song[2]);
-      addOnClick();
+      addHandlers();
     });
 
 });

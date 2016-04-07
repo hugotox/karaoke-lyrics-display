@@ -10,25 +10,17 @@ html, body, #container{
     padding: 0;
 }
 
-#container {
-    background-color: #232323;
-    color: white;
+#background, #background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.current-line {
-    font-size: 60px;
-    text-shadow: 1px 1px 1px #666;
-    height: 170px;
-}
-
-.next-line, .next-line-2 {
-    font-size: 30px;
-    color: #707070;
-    height: 75px;
-}
-
-.next-line-2 {
-    opacity: 0;
+#background-overlay {
+    background-color: black;
+    opacity: 0.8;
 }
 
 #lyrics {
