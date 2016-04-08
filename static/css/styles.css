@@ -20,11 +20,25 @@ html, body, #container{
 
 #background-overlay {
     background-color: black;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 #lyrics {
     position: absolute;
     top: 30%;
     width: 100%;
+}
+
+#index {
+    position: absolute;
+}
+
+#index a {
+    color: #c6d2ff;
+    text-transform: none;
+    font-family: arial, sans-serif;
+}
+
+li {
+    text-align: left;
 }

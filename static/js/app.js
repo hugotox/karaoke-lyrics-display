@@ -6,12 +6,17 @@ var options = {
   nextLineHeight: '75px',
   nextLineColor: '#707070',
   images: {
-    'highway-to-hell': 'ac-dc.jpg'
+    'highway-to-hell': 'ac-dc.jpg',
+    'killing-in-the-name': 'rage.jpg',
+    'enter-sandman': 'metallica.jpg'
   }
 };
 
 var songParam = window.location.search.split('?song=')[1];
-var url = 'static/songs/' + songParam + '.txt';
+var url;
+if(songParam) {
+  url = 'static/songs/' + songParam + '.txt';
+}
 
 // option based style:
 var style = '<style>' +
@@ -46,6 +51,7 @@ $(document).ready(function(){
   var song, lines;
   var i = 3;
   var locked = false;
+  var $index = $('#index');
 
   var addHandlers = function(){
     $(document).on('click keydown', function(){
@@ -75,18 +81,29 @@ $(document).ready(function(){
     });
   };
 
-  // load the song
-  $.ajax({ url: url })
-    .done(function(data){
-      song = data.split('\n');
-      lines = song.length;
-      var $currentLine = $('.current-line');
-      var $nextLine = $('.next-line');
-      var $nextLine2 = $('.next-line-2');
-      $currentLine.html(song[0]);
-      $nextLine.html(song[1]);
-      $nextLine2.html(song[2]);
-      addHandlers();
-    });
+  if(url) {
+    $index.hide();
+    // load the song
+    $.ajax({url: url})
+      .done(function(data) {
+        song = data.split('\n');
+        lines = song.length;
+        var $currentLine = $('.current-line');
+        var $nextLine = $('.next-line');
+        var $nextLine2 = $('.next-line-2');
+        $currentLine.html(song[0]);
+        $nextLine.html(song[1]);
+        $nextLine2.html(song[2]);
+        addHandlers();
+      });
+  } else {
+    // show the index
+    var html = '<ul>';
+    for(var s in options.images) {
+      html += '<li><a href="?song='+s+'">'+s+'</a></li>';
+    }
+    html += '</ul>';
+    $index.html(html);
+  }
 
 });
