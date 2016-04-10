@@ -1,0 +1,24 @@
+{
+  "currentLineFontSize": "60px",
+  "currentLineHeight": "170px",
+  "currentLineColor": "#ffffff",
+  "nextLineFontSize": "30px",
+  "nextLineHeight": "75px",
+  "nextLineColor": "#707070",
+  "images": {
+    "highway-to-hell": "ac-dc.jpg",
+    "back-in-black": "ac-dc.jpg",
+    "killing-in-the-name": "rage.jpg",
+    "enter-sandman": "metallica.jpg",
+    "nothing-else-matters": "metallica.jpg",
+    "run-to-the-hills": "maiden.jpg",
+    "aces-high": "maiden.jpg",
+    "paranoid": "sabbath.jpg",
+    "rock-and-roll": "zeppelin.jpg",
+    "born-to-be-wild": "steppenwolf.jpg",
+    "fortunate-son": "creedence.jpg",
+    "symphony-of-destruction": "megadeth.jpg",
+    "a-tout-le-monde": "megadeth.jpg",
+    "smoke-on-the-water": "deep-purple.jpg"
+  }
+}

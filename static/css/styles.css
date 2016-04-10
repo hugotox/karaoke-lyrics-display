@@ -34,11 +34,12 @@ html, body, #container{
 }
 
 #index a {
-    color: #c6d2ff;
+    color: white;
     text-transform: none;
     font-family: arial, sans-serif;
 }
 
 li {
     text-align: left;
+    list-style: none;
 }
