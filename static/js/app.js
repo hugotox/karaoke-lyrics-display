@@ -1,3 +1,23 @@
+var parseQueryString = function() {
+  var queryString = window.location.search;
+  var params = {}, queries, temp, i, l;
+
+  if(queryString.indexOf('?') !== -1) {
+    queryString = queryString.split('?')[1];
+
+    // Split into key/value pairs
+    queries = queryString.split("&");
+
+    // Convert the array of strings into an object
+    for (i = 0, l = queries.length; i < l; i++) {
+      temp = queries[i].split('=');
+      params[temp[0]] = temp[1];
+    }
+  }
+
+  return params;
+};
+
 $(document).ready(function(){
 
   var song, lines;
@@ -6,17 +26,20 @@ $(document).ready(function(){
   var $index = $('#index');
   var $dynStyle = $('#dyn-style');
   var options;
-  var songParam;
+  var params;
   var url;
 
-  var makeTitle = function(text){
-    return text.split('-').join(' ');
+  var makeTitle = function(str){
+    str = str.split('-').join(' ');
+    return str.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   };
 
-  var setDynStyle = function(options){
+  var setDynStyle = function(options, band){
     var style = '' +
       '#background {' +
-      '  background: #232323 url("static/img/'+options.images[songParam]+'") no-repeat center;' +
+      '  background: #232323 url("static/img/'+band+'.jpg") no-repeat center;' +
       '  background-size: cover;' +
       '}' +
 
@@ -40,7 +63,7 @@ $(document).ready(function(){
     $dynStyle.html(style);
   };
 
-  var addHandlers = function(){
+  var addHandlers = function(options){
     $(document).on('click keydown', function(){
       if(!locked) {
         locked = true;
@@ -71,10 +94,10 @@ $(document).ready(function(){
   $.getJSON('config.json')
     .done(function(data){
       options = data;
-      songParam = window.location.search.split('?song=')[1];
-      if(songParam) {
-        setDynStyle(options, songParam);
-        url = 'static/songs/' + songParam + '.txt';
+      params = parseQueryString();
+      if(params.song) {
+        setDynStyle(options, params.band);
+        url = 'static/songs/' + params.song + '.txt';
         $index.hide();
         // load the song
         $.ajax({url: url})
@@ -87,13 +110,18 @@ $(document).ready(function(){
             $currentLine.html(song[0]);
             $nextLine.html(song[1]);
             $nextLine2.html(song[2]);
-            addHandlers();
+            addHandlers(options);
           });
       } else {
         // show the index
         var html = '<ul>';
-        for(var s in options.images) {
-          html += '<li><a href="?song='+s+'">'+makeTitle(s)+'</a></li>';
+        var currBand = '';
+        var songArr;
+        for(var s in options.songs) {
+          for(var i=0; i<options.songs[s].length; i++) {
+            html += '<li><a href="?song=' + options.songs[s][i] + '&band=' + s + '">'
+              + makeTitle(s + ': ' + options.songs[s][i]) + '</a></li>';
+          }
         }
         html += '</ul>';
         $index.html(html);
