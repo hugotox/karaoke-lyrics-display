@@ -28,6 +28,7 @@ $(document).ready(function(){
   var options;
   var params;
   var url;
+  var $body = $('body');
 
   var makeTitle = function(str){
     str = str.split('-').join(' ');
@@ -96,6 +97,7 @@ $(document).ready(function(){
       options = data;
       params = parseQueryString();
       if(params.song) {
+        $body.removeClass('index');
         setDynStyle(options, params.band);
         url = 'static/songs/' + params.song + '.txt';
         $index.hide();
@@ -114,16 +116,18 @@ $(document).ready(function(){
           });
       } else {
         // show the index
-        var html = '<ul>';
+        $body.addClass('index');
+        var html = '<div class="list">';
         var currBand = '';
         var songArr;
         for(var s in options.songs) {
           for(var i=0; i<options.songs[s].length; i++) {
-            html += '<li><a href="?song=' + options.songs[s][i] + '&band=' + s + '">'
-              + makeTitle(s + ': ' + options.songs[s][i]) + '</a></li>';
+            html += '<a href="?song=' + options.songs[s][i] + '&band=' + s + '">' +
+              '<img src="static/img/'+s+'.jpg"/>'
+              + makeTitle(s + ': ' + options.songs[s][i]) + '</a>';
           }
         }
-        html += '</ul>';
+        html += '</div>';
         $index.html(html);
       }
     });

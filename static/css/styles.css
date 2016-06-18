@@ -37,9 +37,31 @@ html, body, #container{
     color: white;
     text-transform: none;
     font-family: arial, sans-serif;
+    opacity: 0.6;
 }
 
-li {
-    text-align: left;
-    list-style: none;
+#index a:hover {
+    opacity: 1;
+}
+
+.index #background-overlay {
+    opacity: 0.9;
+}
+
+.list {
+
+}
+
+.list a {
+    display: inline-block;
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    background-color: #1a1a1a;
+    vertical-align: top;
+}
+
+.list a img {
+    width: 200px;
+    height: 200px;
 }
